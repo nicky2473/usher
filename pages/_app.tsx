@@ -6,6 +6,7 @@ import Sidebar from "../components/common/Sidebar";
 import Footer from "../components/common/Footer";
 import Head from "next/head";
 import "antd/dist/antd.css";
+import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 
 const CustomContents = styled(Layout.Content)`
