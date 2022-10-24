@@ -1,10 +1,4 @@
-import {
-  KeyescapeGnThemeKey,
-  KeyescapeMemoryThemeKey,
-  KeyescapeTheormThemeKey,
-  KeyescapeUzulikeThemeKey,
-  KeyescapeZizumKey,
-} from "../../types/shops/keyescape.type";
+import { KeyescapeZizumKey } from "../../types/shops/keyescape.type";
 
 export const keyescapeZizumNum: { [key in KeyescapeZizumKey]: number } = {
   "keyescape-gn": 3,

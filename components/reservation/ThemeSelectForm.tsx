@@ -49,7 +49,7 @@ const ThemeSelectForm = () => {
   const [selectedShop, setSelectedShop] = useState<KeyescapeZizumKey | null>();
   const [selectedTheme, setSelectedTheme] = useState<string>("");
   const [selectedDate, setSelectedDate] = useState<string>("");
-  const [selectedTime, setSelectedTime] = useState<number>();
+  const [selectedTime, setSelectedTime] = useState<number | null>();
 
   const reservation = async () => {
     if (!selectedTheme || !selectedShop || !selectedDate) {
@@ -133,9 +133,12 @@ const ThemeSelectForm = () => {
   };
 
   useEffect(() => {
-    if (!selectedTheme || !selectedShop || !selectedDate) return;
-
     setTimeslots([]);
+    setSelectedTime(null);
+  }, [selectedTheme, selectedShop, selectedDate]);
+
+  useEffect(() => {
+    if (!selectedTheme || !selectedShop || !selectedDate) return;
 
     const getTimeslots = async () => {
       try {
@@ -239,13 +242,15 @@ const ThemeSelectForm = () => {
       <Contents>
         <Label>시간</Label>
         <Select
+          value={selectedTime?.toString()}
           style={{ width: 200 }}
-          onChange={(selected: string) => {
-            setSelectedTime(Number(selected.split(",")[1]));
+          onChange={(selected) => {
+            console.log(selected);
+            setSelectedTime(Number(selected));
           }}
         >
           {timeslots?.map(([timeslot, timeNum]) => (
-            <Select.Option key={timeslot} value={`${timeslot},${timeNum}`}>
+            <Select.Option key={timeslot} value={timeNum}>
               {timeslot}
             </Select.Option>
           ))}
