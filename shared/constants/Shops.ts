@@ -14,6 +14,10 @@ export const shops: { [key in RegionKey]: Shop[] } = {
       key: "keyescape-theorm",
       value: "키이스케이프 더오름",
     },
+    {
+      key: "keyescape-memory",
+      value: "키이스케이프 메모리컴퍼니",
+    },
   ],
   gundae: [],
   hongdae: [],

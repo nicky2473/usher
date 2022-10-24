@@ -1,7 +1,8 @@
 export type KeyescapeZizumKey =
   | "keyescape-gn"
   | "keyescape-uzulike"
-  | "keyescape-theorm";
+  | "keyescape-theorm"
+  | "keyescape-memory";
 
 export interface KeyescapeThemeTimeParams {
   zizum_num: number;
@@ -21,3 +22,6 @@ export type KeyescapeUzulikeThemeKey = typeof keyescapeUzulikeTheme[number];
 
 export const keyescapeTheormTheme = ["네드", "엔제리오"] as const;
 export type KeyescapeTheormThemeKey = typeof keyescapeTheormTheme[number];
+
+export const keyescapeMemoryTheme = ["FILM BY EDDY"] as const;
+export type KeyescapeMemoryThemeKey = typeof keyescapeMemoryTheme[number];
