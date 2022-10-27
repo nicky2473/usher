@@ -1,4 +1,9 @@
 import {
+  goldenkeyDongsung1Theme,
+  goldenkeyDongsung2Theme,
+  GoldenkeyZizumKey,
+} from '../types/goldenkey.type';
+import {
   keyescapeGnTheme,
   keyescapeHongdaeTheme,
   keyescapeMemoryTheme,
@@ -21,4 +26,9 @@ export const keyescapeThemes: { [key in KeyescapeZizumKey]: string[] } = {
 
 export const secretgardenThemes: { [key in SecretgardenZizumKey]: string[] } = {
   'secretgarden-midnight': [...secretgardenMidnightTheme],
+};
+
+export const goldenkeyThemes: { [key in GoldenkeyZizumKey]: string[] } = {
+  'goldenkey-dongsung1': [...goldenkeyDongsung1Theme],
+  'goldenkey-dongsung2': [...goldenkeyDongsung2Theme],
 };

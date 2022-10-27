@@ -1,11 +1,5 @@
 export type SecretgardenZizumKey = 'secretgarden-midnight';
 
-export interface SecretgardenThemeTimeParams {
-  zizum_num: number;
-  rev_days: string;
-  theme_num: number;
-}
-
 export const secretgardenMidnightTheme = [
   '비밀의 가족',
   '파리82',

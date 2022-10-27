@@ -1,5 +1,5 @@
 import React from 'react';
-import ThemeSelectForm from '../../../components/reservation/secretgarden/ThemeSelectForm';
+import ThemeSelectForm from '../../../components/reservation/goldenkey/ThemeSelectForm';
 
 const Page = () => {
   return <ThemeSelectForm />;

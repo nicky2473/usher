@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
 import { Layout, Menu, MenuProps } from 'antd';
-import { CalendarOutlined, CarryOutOutlined } from '@ant-design/icons';
+import { CalendarOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 
 import { ReactComponent as Maze } from '../../public/svg/maze.svg';
@@ -25,8 +25,6 @@ const Logo = styled.div`
 `;
 
 const Sidebar = () => {
-  const [openKeys, setOpenKeys] = useState<string[]>(['keyescape']);
-
   const router = useRouter();
 
   const subItems = [
@@ -34,7 +32,6 @@ const Sidebar = () => {
       key: 'keyescape',
       label: '키이스케이프',
       onClick: (e: any) => {
-        setOpenKeys(e.key);
         router.push('/reservation/keyescape');
       },
     },
@@ -42,8 +39,14 @@ const Sidebar = () => {
       key: 'secretgarden',
       label: '비밀의 화원',
       onClick: (e: any) => {
-        setOpenKeys(e.key);
         router.push('/reservation/secretgarden');
+      },
+    },
+    {
+      key: 'goldenkey',
+      label: '황금열쇠',
+      onClick: (e: any) => {
+        router.push('/reservation/goldenkey');
       },
     },
   ];
@@ -66,11 +69,11 @@ const Sidebar = () => {
         }}
       >
         <Maze />
-        <div className='logo-name'>Usher</div>
+        <div className="logo-name">Usher</div>
       </Logo>
       <Menu
-        theme='dark'
-        mode='inline'
+        theme="dark"
+        mode="inline"
         defaultSelectedKeys={['reservation']}
         defaultOpenKeys={['keyescape']}
         items={items}

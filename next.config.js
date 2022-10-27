@@ -21,6 +21,10 @@ const nextConfig = {
         source: '/secretgarden/:path*',
         destination: 'http://www.secretgardenescape.com/:path*', // Proxy to Backend
       },
+      {
+        source: '/goldenkey/:path*',
+        destination: 'http://xn--jj0b998aq3cptw.com/:path*', // Proxy to Backend
+      },
     ];
   },
 };
