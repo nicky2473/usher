@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Select, DatePicker, Button } from 'antd';
+import { Select, DatePicker, Button, Input } from 'antd';
 import { SendOutlined } from '@ant-design/icons';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-import produce from 'immer';
 import qs from 'qs';
 
 import { themes } from '../../../shared/constants/Themes';
@@ -47,14 +46,13 @@ const Reservation = styled(Button)`
 `;
 
 const ThemeSelectForm = () => {
-  const [timeslots, setTimeslots] = useState<[string, string][]>([]);
   const [selectedShop, setSelectedShop] = useState<KeyescapeZizumKey | null>();
   const [selectedTheme, setSelectedTheme] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedTime, setSelectedTime] = useState<number | null>();
 
   const reservation = async () => {
-    if (!selectedTheme || !selectedShop || !selectedDate) {
+    if (!selectedTheme || !selectedShop || !selectedDate || !selectedTime) {
       toast.error('모든 폼 양식을 채워주세요.');
 
       return;
@@ -135,7 +133,6 @@ const ThemeSelectForm = () => {
   };
 
   useEffect(() => {
-    setTimeslots([]);
     setSelectedTime(null);
   }, [selectedTheme, selectedShop, selectedDate]);
 
@@ -158,14 +155,6 @@ const ThemeSelectForm = () => {
         timeslots.each((_index, el) => {
           // text() 메서드를 사용하기 위해 Node 객체인 el을 $로 감싸서 cheerio 객체로 변환
           const href = $(el).parent('a').attr('href');
-
-          if (href) {
-            setTimeslots(
-              produce((draft) => {
-                draft.push([$(el).text(), href.split("'")[1]]);
-              })
-            );
-          }
         });
       } catch (error) {
         console.log(error);
@@ -227,20 +216,12 @@ const ThemeSelectForm = () => {
         </div>
         <div>
           <Label>시간</Label>
-          <Select
-            value={selectedTime?.toString()}
+          <Input
             style={{ width: 200 }}
-            onChange={(selected) => {
-              console.log(selected);
-              setSelectedTime(Number(selected));
+            onBlur={(e) => {
+              setSelectedTime(Number(e.target.value));
             }}
-          >
-            {timeslots?.map(([timeslot, timeNum]) => (
-              <Select.Option key={timeslot} value={timeNum}>
-                {timeslot}
-              </Select.Option>
-            ))}
-          </Select>
+          />
         </div>
       </Contents>
       <Reservation
