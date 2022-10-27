@@ -13,7 +13,10 @@ import qs from 'qs';
 
 import { toast } from 'react-toastify';
 import { GoldenkeyZizumKey } from '../../../shared/types/goldenkey.type';
-import { goldenkeyShops } from '../../../shared/constants/shops/Goldenkey';
+import {
+  goldenkeyShops,
+  goldenkeyZizumNum,
+} from '../../../shared/constants/shops/Goldenkey';
 import { goldenkeyThemes } from '../../../shared/constants/Themes';
 
 const Container = styled.div`
@@ -37,7 +40,7 @@ const ThemeSelectForm = forwardRef((_props, ref) => {
   const [selectedShop, setSelectedShop] = useState<GoldenkeyZizumKey | null>();
   const [selectedTheme, setSelectedTheme] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<string>('');
-  const [selectedTime, setSelectedTime] = useState<number | null>();
+  const [selectedTime, setSelectedTime] = useState<string | null>();
 
   useImperativeHandle(ref, () => {
     const cancel = async () => {
@@ -65,14 +68,40 @@ const ThemeSelectForm = forwardRef((_props, ref) => {
         return;
       }
 
+      let theme_time_num;
+
       try {
+        try {
+          const { data } = await axios.get('/goldenkey/layout/res/home.php', {
+            params: {
+              rev_days: selectedDate,
+              s_zizum: goldenkeyZizumNum[selectedShop],
+              go: 'rev.make',
+            },
+          });
+
+          const $ = cheerio.load(data);
+          const theme = $(`.h3_theme:contains(${selectedTheme})`);
+          const time = theme
+            .parent('.theme_Title')
+            .siblings('.time_Area')
+            .children('ul')
+            .children('li')
+            .children('a')
+            .children(`.time:contains(${selectedTime})`);
+          const href = time.parent('a').attr('href');
+          theme_time_num = href?.slice(href.lastIndexOf('=') + 1);
+        } catch (error) {
+          console.log(error);
+        }
+
         const { data: revMake } = await axios.get(
           `/goldenkey/layout/res/home.php`,
           {
             params: {
               go: 'rev.make.input',
               rev_days: selectedDate,
-              theme_time_num: selectedTime,
+              theme_time_num,
             },
           }
         );
@@ -156,6 +185,42 @@ const ThemeSelectForm = forwardRef((_props, ref) => {
     setSelectedTime(null);
   }, [selectedTheme, selectedShop, selectedDate]);
 
+  useEffect(() => {
+    if (!selectedTheme || !selectedShop || !selectedDate) return;
+
+    const getTimeslots = async () => {
+      try {
+        const { data } = await axios.get('/goldenkey/layout/res/home.php', {
+          params: {
+            rev_days: selectedDate,
+            s_zizum: goldenkeyZizumNum[selectedShop],
+            go: 'rev.make',
+          },
+        });
+
+        const $ = cheerio.load(data);
+        const theme = $(`.h3_theme:contains(${selectedTheme})`);
+        const timeslots = theme
+          .parent('.theme_Title')
+          .siblings('.time_Area')
+          .children('ul')
+          .children('li');
+
+        timeslots.each((_index, el) => {
+          // text() 메서드를 사용하기 위해 Node 객체인 el을 $로 감싸서 cheerio 객체로 변환
+          const href = $(el).children('a').attr('href');
+          const time = $(el).children('a').children('.time').text().trim();
+
+          console.log(href, time);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    getTimeslots();
+  }, [selectedTheme, selectedShop, selectedDate]);
+
   return (
     <Container>
       <Contents>
@@ -210,7 +275,7 @@ const ThemeSelectForm = forwardRef((_props, ref) => {
           <Input
             style={{ width: 200 }}
             onBlur={(e) => {
-              setSelectedTime(Number(e.target.value));
+              setSelectedTime(e.target.value);
             }}
           />
         </div>
