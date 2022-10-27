@@ -1,9 +1,10 @@
-import type { NextPage } from "next";
-import React from "react";
-import styled from "@emotion/styled";
-import { css, keyframes } from "@emotion/css";
+import type { NextPage } from 'next';
+import React from 'react';
+import styled from '@emotion/styled';
+import { css, keyframes } from '@emotion/css';
 
-import { ReactComponent as Maze } from "../public/svg/maze.svg";
+import { ReactComponent as Maze } from '../public/svg/maze.svg';
+import { useRouter } from 'next/router';
 
 const rotate = keyframes`
   from {
@@ -43,17 +44,22 @@ const Container = styled.div`
 `;
 
 const Home: NextPage = () => {
+  const router = useRouter();
+
   return (
     <Container>
       <Maze
-        width="400px"
-        height="400px"
+        width='400px'
+        height='400px'
         className={css`
           animation: ${rotate} 30s ease infinite;
+          cursor: pointer;
         `}
+        onClick={() => {
+          router.push('/reservation/keyescape');
+        }}
       />
-      <div className="title">USHER</div>
-      <div className="description">Auto Escape-Room Reservation System</div>
+      <div className='title'>USHER</div>
     </Container>
   );
 };

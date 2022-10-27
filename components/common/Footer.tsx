@@ -1,9 +1,9 @@
-import React from "react";
-import styled from "@emotion/styled";
-import { Layout } from "antd";
+import React from 'react';
+import styled from '@emotion/styled';
+import { Layout } from 'antd';
 
 const CustomFooter = styled(Layout.Footer)`
-  margin: 0 auto;
+  text-align: center;
 `;
 
 const Footer = () => {

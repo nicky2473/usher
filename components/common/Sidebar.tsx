@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import styled from "@emotion/styled";
-import { Layout, Menu, MenuProps } from "antd";
-import { CalendarOutlined, CarryOutOutlined } from "@ant-design/icons";
-import { useRouter } from "next/router";
+import React, { useState } from 'react';
+import styled from '@emotion/styled';
+import { Layout, Menu, MenuProps } from 'antd';
+import { CalendarOutlined, CarryOutOutlined } from '@ant-design/icons';
+import { useRouter } from 'next/router';
 
-import { ReactComponent as Maze } from "../../public/svg/maze.svg";
+import { ReactComponent as Maze } from '../../public/svg/maze.svg';
 
 const Container = styled(Layout.Sider)`
   color: white;
@@ -25,47 +25,47 @@ const Logo = styled.div`
 `;
 
 const Sidebar = () => {
-  const [selectedKey, setSelectedKey] = useState<string>("");
+  const [openKeys, setOpenKeys] = useState<string[]>(['keyescape']);
 
   const router = useRouter();
 
-  const items: MenuProps["items"] = [
+  const subItems = [
     {
-      key: "reservation",
-      icon: <CalendarOutlined />,
-      label: `예약하기`,
-      onClick: () => {
-        setSelectedKey("reservation");
-        router.push("/reservation");
-      },
-    },
-    {
-      key: "reservation-check",
-      icon: <CarryOutOutlined />,
-      label: "예약확인",
-      onClick: () => {
-        setSelectedKey("reservation-check");
-        router.push("/reservation/check");
+      key: 'keyescape',
+      label: '키이스케이프',
+      onClick: (e: any) => {
+        setOpenKeys(e.key);
+        router.push('/reservation/keyescape');
       },
     },
   ];
 
+  const items: MenuProps['items'] = [
+    {
+      key: 'reservation',
+      icon: <CalendarOutlined />,
+      label: `예약하기`,
+      children: subItems,
+    },
+  ];
+
+  if (router.pathname === '/') return null;
   return (
     <Container>
       <Logo
         onClick={() => {
-          setSelectedKey("");
-          router.push("/");
+          router.push('/');
         }}
       >
         <Maze />
-        <div className="logo-name">Usher</div>
+        <div className='logo-name'>Usher</div>
       </Logo>
       <Menu
-        theme="dark"
-        mode="inline"
+        theme='dark'
+        mode='inline'
+        defaultSelectedKeys={['reservation']}
+        defaultOpenKeys={['keyescape']}
         items={items}
-        selectedKeys={[selectedKey]}
       />
     </Container>
   );

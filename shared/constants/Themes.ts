@@ -1,13 +1,16 @@
 import {
   keyescapeGnTheme,
+  keyescapeHongdaeTheme,
   keyescapeMemoryTheme,
   keyescapeTheormTheme,
   keyescapeUzulikeTheme,
-} from "../types/shops/keyescape.type";
+  KeyescapeZizumKey,
+} from '../types/keyescape.type';
 
-export const themes: { [key: string]: string[] } = {
-  "keyescape-gn": [...keyescapeGnTheme],
-  "keyescape-uzulike": [...keyescapeUzulikeTheme],
-  "keyescape-theorm": [...keyescapeTheormTheme],
-  "keyescape-memory": [...keyescapeMemoryTheme],
+export const themes: { [key in KeyescapeZizumKey]: string[] } = {
+  'keyescape-gn': [...keyescapeGnTheme],
+  'keyescape-uzulike': [...keyescapeUzulikeTheme],
+  'keyescape-theorm': [...keyescapeTheormTheme],
+  'keyescape-memory': [...keyescapeMemoryTheme],
+  'keyescape-hongdae': [...keyescapeHongdaeTheme],
 };
