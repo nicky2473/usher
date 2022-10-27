@@ -7,7 +7,7 @@ import axios from 'axios';
 import * as cheerio from 'cheerio';
 import qs from 'qs';
 
-import { themes } from '../../../shared/constants/Themes';
+import { keyescapeThemes } from '../../../shared/constants/Themes';
 import {
   keyescapeShops,
   keyescapeThemeNum,
@@ -195,7 +195,7 @@ const ThemeSelectForm = () => {
             }}
           >
             {selectedShop &&
-              themes[selectedShop]?.map((theme) => (
+              keyescapeThemes[selectedShop]?.map((theme) => (
                 <Select.Option key={theme} value={theme}>
                   {theme}
                 </Select.Option>

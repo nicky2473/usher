@@ -5,12 +5,6 @@ export type KeyescapeZizumKey =
   | 'keyescape-memory'
   | 'keyescape-hongdae';
 
-export interface KeyescapeThemeTimeParams {
-  zizum_num: number;
-  rev_days: string;
-  theme_num: number;
-}
-
 export const keyescapeGnTheme = [
   '월야애담',
   '살랑살랑 연구소',

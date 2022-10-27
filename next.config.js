@@ -6,7 +6,7 @@ const nextConfig = {
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
-      use: ["@svgr/webpack", "url-loader"],
+      use: ['@svgr/webpack', 'url-loader'],
     });
 
     return config;
@@ -14,8 +14,12 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: "/api/:path*",
-        destination: "https://keyescape.co.kr/:path*", // Proxy to Backend
+        source: '/api/:path*',
+        destination: 'https://keyescape.co.kr/:path*', // Proxy to Backend
+      },
+      {
+        source: '/secretgarden/:path*',
+        destination: 'http://www.secretgardenescape.com/:path*', // Proxy to Backend
       },
     ];
   },

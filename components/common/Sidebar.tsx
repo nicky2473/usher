@@ -38,6 +38,14 @@ const Sidebar = () => {
         router.push('/reservation/keyescape');
       },
     },
+    {
+      key: 'secretgarden',
+      label: '비밀의 화원',
+      onClick: (e: any) => {
+        setOpenKeys(e.key);
+        router.push('/reservation/secretgarden');
+      },
+    },
   ];
 
   const items: MenuProps['items'] = [
