@@ -12,6 +12,7 @@ import { ToastContainer } from 'react-toastify';
 const CustomContents = styled(Layout.Content)`
   display: flex;
   height: calc(100vh - 70px);
+  overflow: auto;
   background-color: white;
 `;
 
@@ -19,18 +20,18 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <Layout>
       <ToastContainer
-        position='top-right'
+        position="top-right"
         autoClose={3000}
         newestOnTop
         closeOnClick
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme='colored'
+        theme="colored"
       />
       <Head>
         <title>Usher</title>
-        <meta name='viewport' content='initial-scale=1.0, width=device-width' />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
       <Sidebar />
       <Layout>
