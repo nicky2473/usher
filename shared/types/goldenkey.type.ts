@@ -9,6 +9,7 @@ export const goldenkeyDongsung1Theme = [
 export type GoldenkeyDongsung1ThemeKey = typeof goldenkeyDongsung1Theme[number];
 
 export const goldenkeyDongsung2Theme = [
+  '지옥',
   '다시, 너에게',
   'HEAVEN',
   '냥탐정 셜록캣',
