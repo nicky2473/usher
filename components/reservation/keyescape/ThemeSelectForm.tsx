@@ -123,6 +123,12 @@ const ThemeSelectForm = forwardRef((_props, ref) => {
 
         console.log(result);
         console.log('예약번호: ', ckCode);
+
+        if (ckCode) {
+          toast.info(`예약번호: ${ckCode}`, {
+            autoClose: false,
+          });
+        }
       } catch (error) {
         console.log(error);
       }

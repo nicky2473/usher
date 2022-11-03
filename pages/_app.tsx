@@ -7,11 +7,7 @@ import Head from 'next/head';
 import 'antd/dist/antd.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
-import dynamic from 'next/dynamic';
-
-const DynamicFooter = dynamic(() => import('../components/common/Footer'), {
-  ssr: false,
-});
+import Footer from '../components/common/Footer';
 
 const CustomContents = styled(Layout.Content)`
   display: flex;
@@ -42,7 +38,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <CustomContents>
           <Component {...pageProps} />
         </CustomContents>
-        <DynamicFooter />
+        <Footer />
       </Layout>
     </Layout>
   );
