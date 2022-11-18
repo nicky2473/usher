@@ -42,6 +42,8 @@ const ThemeSelectForm = forwardRef((_props, ref) => {
   const [selectedTheme, setSelectedTheme] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedTime, setSelectedTime] = useState<number | null>();
+  const [name, setName] = useState<string>('');
+  const [phone, setPhone] = useState<string>('');
 
   useImperativeHandle(ref, () => {
     const reservation = async () => {
@@ -76,13 +78,15 @@ const ThemeSelectForm = forwardRef((_props, ref) => {
           if (index === 4) prices['price'] = $revMake(el).attr('value');
         });
 
+        const phoneNumber = phone.split('-');
+
         const { data: revMake2 } = await axios.post(
           '/api/web/rev.act.php',
           qs.stringify({
-            name: '조준호',
-            mobile1: '010',
-            mobile2: '6741',
-            mobile3: '2473',
+            name,
+            mobile1: phoneNumber[0],
+            mobile2: phoneNumber[1],
+            mobile3: phoneNumber[2],
             person: 2,
             memo: '',
             str_spam: spamCode.text().trim(),
@@ -172,6 +176,24 @@ const ThemeSelectForm = forwardRef((_props, ref) => {
   return (
     <Container>
       <Contents>
+        <div>
+          <Label>이름</Label>
+          <Input
+            style={{ width: 200 }}
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
+          />
+        </div>
+        <div>
+          <Label>전화번호</Label>
+          <Input
+            style={{ width: 200 }}
+            onChange={(e) => {
+              setPhone(e.target.value);
+            }}
+          />
+        </div>
         <div>
           <Label>매장</Label>
           <Select
