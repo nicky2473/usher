@@ -274,6 +274,7 @@ const ThemeSelectForm = forwardRef((_props, ref) => {
           <Label>시간</Label>
           <Input
             style={{ width: 200 }}
+            placeholder='HH:mm'
             onChange={(e) => {
               setSelectedTime(e.target.value);
             }}

@@ -1,6 +1,7 @@
 import {
   goldenkeyDongsung1Theme,
   goldenkeyDongsung2Theme,
+  goldenkeyUtopiaTheme,
   GoldenkeyZizumKey,
 } from '../types/goldenkey.type';
 import {
@@ -31,4 +32,5 @@ export const secretgardenThemes: { [key in SecretgardenZizumKey]: string[] } = {
 export const goldenkeyThemes: { [key in GoldenkeyZizumKey]: string[] } = {
   'goldenkey-dongsung1': [...goldenkeyDongsung1Theme],
   'goldenkey-dongsung2': [...goldenkeyDongsung2Theme],
+  'goldenkey-utopia': [...goldenkeyUtopiaTheme],
 };
