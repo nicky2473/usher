@@ -18,7 +18,7 @@ export type KeyescapeUzulikeThemeKey = typeof keyescapeUzulikeTheme[number];
 export const keyescapeTheormTheme = ['네드', '엔제리오'] as const;
 export type KeyescapeTheormThemeKey = typeof keyescapeTheormTheme[number];
 
-export const keyescapeMemoryTheme = ['FILM BY EDDY'] as const;
+export const keyescapeMemoryTheme = ['FILM BY EDDY', 'FILM BY STEVE'] as const;
 export type KeyescapeMemoryThemeKey = typeof keyescapeMemoryTheme[number];
 
 export const keyescapeHongdaeTheme = ['삐릿-뽀', '홀리데이', '고백'] as const;

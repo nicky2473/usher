@@ -24,6 +24,7 @@ export const keyescapeThemeNum: { [key in KeyescapeZizumKey]: any } = {
   },
   'keyescape-memory': {
     'FILM BY EDDY': 57,
+    'FILM BY STEVE': 58,
   },
   'keyescape-hongdae': {
     '삐릿-뽀': 41,

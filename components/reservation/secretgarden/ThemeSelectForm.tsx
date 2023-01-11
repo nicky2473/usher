@@ -1,6 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import { Select, DatePicker, Button, Input } from 'antd';
-import { SendOutlined } from '@ant-design/icons';
+import React, {
+  forwardRef,
+  useEffect,
+  useImperativeHandle,
+  useState,
+} from 'react';
+import { Select, DatePicker, Input } from 'antd';
 import styled from '@emotion/styled';
 import dayjs from 'dayjs';
 import axios from 'axios';
@@ -16,13 +20,9 @@ import {
 } from '../../../shared/constants/shops/Secretgarden';
 
 const Container = styled.div`
+  border: solid 1px rgba(197, 197, 197, 0.5);
   padding: 20px;
-`;
-
-const Title = styled.div`
-  font-size: 30px;
-  font-weight: bold;
-  margin-bottom: 20px;
+  border-radius: 10px;
 `;
 
 const Contents = styled.div`
@@ -36,88 +36,86 @@ const Label = styled.div`
   font-weight: bold;
 `;
 
-const Reservation = styled(Button)`
-  position: absolute;
-  right: 30px;
-  bottom: 100px;
-  width: 100px;
-  height: 100px;
-`;
-
-const ThemeSelectForm = () => {
+const ThemeSelectForm = forwardRef((_props, ref) => {
   const [selectedShop, setSelectedShop] =
     useState<SecretgardenZizumKey | null>();
   const [selectedTheme, setSelectedTheme] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<string>('');
   const [selectedTime, setSelectedTime] = useState<string>('');
 
-  const reservation = async () => {
-    if (!selectedTheme || !selectedShop || !selectedDate || !selectedTime) {
-      toast.error('모든 폼 양식을 채워주세요.');
+  useImperativeHandle(ref, () => {
+    const reservation = async () => {
+      if (!selectedTheme || !selectedShop || !selectedDate || !selectedTime) {
+        toast.error('모든 폼 양식을 채워주세요.');
 
-      return;
-    }
+        return;
+      }
 
-    try {
-      const { data: mySpam } = await axios.post(
-        '/secretgarden/bbsbb/myspam.php'
-      );
+      try {
+        const { data: mySpam } = await axios.post(
+          '/secretgarden/bbsbb/myspam.php'
+        );
 
-      const $mySpam = cheerio.load(mySpam);
-      const spamNames = $mySpam('span');
+        const $mySpam = cheerio.load(mySpam);
+        const spamNames = $mySpam('span');
 
-      let WKey = '';
+        let WKey = '';
 
-      spamNames.each((_index, el) => {
-        WKey += $mySpam(el).text();
-      });
+        spamNames.each((_index, el) => {
+          WKey += $mySpam(el).text();
+        });
 
-      const { data: reservationData } = await axios.post(
-        `/secretgarden/reservation_02.html`,
-        qs.stringify({
-          prdno: secretgardenThemeNum[selectedShop]?.[selectedTheme],
-          rdate: selectedDate,
-          rtime: selectedTime,
-        })
-      );
+        const { data: reservationData } = await axios.post(
+          `/secretgarden/reservation_02.html`,
+          qs.stringify({
+            prdno: secretgardenThemeNum[selectedShop]?.[selectedTheme],
+            rdate: selectedDate,
+            rtime: selectedTime,
+          })
+        );
 
-      const $reservationData = cheerio.load(reservationData);
+        const $reservationData = cheerio.load(reservationData);
 
-      const players = $reservationData('#players option:nth-child(1)').attr(
-        'value'
-      );
-      const booking_num = $reservationData('input[name=booking_num]').attr(
-        'value'
-      );
-      const next_time = $reservationData('input[name=next_time]').attr('value');
+        const players = $reservationData('#players option:nth-child(1)').attr(
+          'value'
+        );
+        const booking_num = $reservationData('input[name=booking_num]').attr(
+          'value'
+        );
+        const next_time = $reservationData('input[name=next_time]').attr(
+          'value'
+        );
 
-      const { data: reservation } = await axios.post(
-        `/secretgarden/reservation_02.php`,
-        qs.stringify({
-          doing: 'insert',
-          productno: secretgardenThemeNum[selectedShop]?.[selectedTheme],
-          derv_date: selectedDate,
-          derv_time: selectedTime,
-          booking_num,
-          next_time,
-          players,
-          o_name: '조준호',
-          o_hand_ph01: '010',
-          o_hand_ph02: '6741',
-          o_hand_ph03: '2473',
-          paytype: 1,
-          passwd: '3550',
-          comment: '',
-          WKey,
-          privacy: 'Y',
-        })
-      );
+        const { data: reservation } = await axios.post(
+          `/secretgarden/reservation_02.php`,
+          qs.stringify({
+            doing: 'insert',
+            productno: secretgardenThemeNum[selectedShop]?.[selectedTheme],
+            derv_date: selectedDate,
+            derv_time: selectedTime,
+            booking_num,
+            next_time,
+            players,
+            o_name: '조준호',
+            o_hand_ph01: '010',
+            o_hand_ph02: '6741',
+            o_hand_ph03: '2473',
+            paytype: 1,
+            passwd: '3550',
+            comment: '',
+            WKey,
+            privacy: 'Y',
+          })
+        );
 
-      console.log(reservation);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+        console.log(reservation);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    return { reservation };
+  });
 
   useEffect(() => {
     setSelectedTime('');
@@ -125,7 +123,6 @@ const ThemeSelectForm = () => {
 
   return (
     <Container>
-      <Title>비밀의 화원</Title>
       <Contents>
         <div>
           <Label>매장</Label>
@@ -184,16 +181,10 @@ const ThemeSelectForm = () => {
           />
         </div>
       </Contents>
-      <Reservation
-        type='primary'
-        icon={<SendOutlined style={{ fontSize: '30px' }} />}
-        shape='circle'
-        onClick={() => {
-          reservation();
-        }}
-      />
     </Container>
   );
-};
+});
+
+ThemeSelectForm.displayName = 'ThemeSelectForm';
 
 export default ThemeSelectForm;
