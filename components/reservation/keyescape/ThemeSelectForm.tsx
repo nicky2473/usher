@@ -38,10 +38,14 @@ const Label = styled.div`
 `;
 
 const ThemeSelectForm = forwardRef((_props, ref) => {
+  const [themeTimeNumber, setThemeTimeNumber] = useState<Map<string, number>>(
+    new Map()
+  );
+
   const [selectedShop, setSelectedShop] = useState<KeyescapeZizumKey | null>();
   const [selectedTheme, setSelectedTheme] = useState<string>('');
   const [selectedDate, setSelectedDate] = useState<string>('');
-  const [selectedTime, setSelectedTime] = useState<number | null>();
+  const [selectedTime, setSelectedTime] = useState<string | null>();
   const [name, setName] = useState<string>('');
   const [phone, setPhone] = useState<string>('');
 
@@ -60,7 +64,7 @@ const ThemeSelectForm = forwardRef((_props, ref) => {
             zizum_num: keyescapeZizumNum[selectedShop],
             rev_days: selectedDate,
             theme_num: keyescapeThemeNum[selectedShop]?.[selectedTheme],
-            theme_time_num: selectedTime,
+            theme_time_num: themeTimeNumber.get(selectedTime),
             go: 'rev.make2',
           })
         );
@@ -92,7 +96,7 @@ const ThemeSelectForm = forwardRef((_props, ref) => {
             str_spam: spamCode.text().trim(),
             ck_agree: 'on',
             rev_days: selectedDate,
-            theme_time_num: selectedTime,
+            theme_time_num: themeTimeNumber.get(selectedTime),
             ...prices,
             act: 'make',
           })
@@ -161,10 +165,20 @@ const ThemeSelectForm = forwardRef((_props, ref) => {
         const $ = cheerio.load(data);
         const timeslots = $('li');
 
+        let themeTimeNumberMap = new Map();
         timeslots.each((_index, el) => {
           // text() 메서드를 사용하기 위해 Node 객체인 el을 $로 감싸서 cheerio 객체로 변환
           const href = $(el).parent('a').attr('href');
+          const time = $(el).text().trim();
+
+          console.log(href, time);
+
+          themeTimeNumberMap.set(time, Number(href?.split("'")[1]));
         });
+
+        setThemeTimeNumber(themeTimeNumberMap);
+
+        console.log(themeTimeNumberMap);
       } catch (error) {
         console.log(error);
       }
@@ -189,6 +203,7 @@ const ThemeSelectForm = forwardRef((_props, ref) => {
           <Label>전화번호</Label>
           <Input
             style={{ width: 200 }}
+            placeholder='000-0000-0000'
             onChange={(e) => {
               setPhone(e.target.value);
             }}
@@ -244,8 +259,9 @@ const ThemeSelectForm = forwardRef((_props, ref) => {
           <Label>시간</Label>
           <Input
             style={{ width: 200 }}
+            placeholder='HH:mm'
             onChange={(e) => {
-              setSelectedTime(Number(e.target.value));
+              setSelectedTime(e.target.value);
             }}
           />
         </div>
