@@ -13,6 +13,7 @@ import {
   KeyescapeZizumKey,
 } from '../types/keyescape.type';
 import {
+  secretgardenDowntownTheme,
   secretgardenMidnightTheme,
   SecretgardenZizumKey,
 } from '../types/secretgarden.types';
@@ -27,6 +28,7 @@ export const keyescapeThemes: { [key in KeyescapeZizumKey]: string[] } = {
 
 export const secretgardenThemes: { [key in SecretgardenZizumKey]: string[] } = {
   'secretgarden-midnight': [...secretgardenMidnightTheme],
+  'secretgarden-downtown': [...secretgardenDowntownTheme],
 };
 
 export const goldenkeyThemes: { [key in GoldenkeyZizumKey]: string[] } = {
