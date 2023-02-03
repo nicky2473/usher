@@ -49,6 +49,13 @@ const Sidebar = () => {
         router.push('/reservation/goldenkey');
       },
     },
+    {
+      key: 'pointnine',
+      label: '포인트나인',
+      onClick: (e: any) => {
+        router.push('/reservation/pointnine');
+      },
+    },
   ];
 
   const items: MenuProps['items'] = [
@@ -69,11 +76,11 @@ const Sidebar = () => {
         }}
       >
         <Maze />
-        <div className="logo-name">Usher</div>
+        <div className='logo-name'>Usher</div>
       </Logo>
       <Menu
-        theme="dark"
-        mode="inline"
+        theme='dark'
+        mode='inline'
         defaultSelectedKeys={['reservation']}
         defaultOpenKeys={['keyescape']}
         items={items}

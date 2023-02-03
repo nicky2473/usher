@@ -13,6 +13,10 @@ import {
   KeyescapeZizumKey,
 } from '../types/keyescape.type';
 import {
+  pointnineHongdaeTheme,
+  PointnineZizumKey,
+} from '../types/pointnine.type';
+import {
   secretgardenDowntownTheme,
   secretgardenMidnightTheme,
   SecretgardenZizumKey,
@@ -35,4 +39,8 @@ export const goldenkeyThemes: { [key in GoldenkeyZizumKey]: string[] } = {
   'goldenkey-dongsung1': [...goldenkeyDongsung1Theme],
   'goldenkey-dongsung2': [...goldenkeyDongsung2Theme],
   'goldenkey-utopia': [...goldenkeyUtopiaTheme],
+};
+
+export const pointnineThemes: { [key in PointnineZizumKey]: string[] } = {
+  'pointnine-hongdae': [...pointnineHongdaeTheme],
 };

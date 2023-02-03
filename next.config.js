@@ -25,6 +25,10 @@ const nextConfig = {
         source: '/goldenkey/:path*',
         destination: 'http://xn--jj0b998aq3cptw.com/:path*', // Proxy to Backend
       },
+      {
+        source: '/point-nine/:path*',
+        destination: 'http://point-nine.com/:path*', // Proxy to Backend
+      },
     ];
   },
 };
